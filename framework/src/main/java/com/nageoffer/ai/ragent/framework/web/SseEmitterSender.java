@@ -18,6 +18,7 @@
 package com.nageoffer.ai.ragent.framework.web;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -69,11 +70,12 @@ public class SseEmitterSender {
             return;
         }
         try {
+            MediaType mediaType = data instanceof CharSequence ? MediaType.TEXT_PLAIN : MediaType.APPLICATION_JSON;
             if (eventName == null) {
-                emitter.send(data);
+                emitter.send(data, mediaType);
                 return;
             }
-            emitter.send(SseEmitter.event().name(eventName).data(data));
+            emitter.send(SseEmitter.event().name(eventName).data(data, mediaType));
         } catch (Exception e) {
             fail(e);
         }

@@ -28,6 +28,7 @@ import com.nageoffer.ai.ragent.rag.controller.request.IntentNodeUpdateRequest;
 import com.nageoffer.ai.ragent.rag.controller.vo.IntentNodeTreeVO;
 import com.nageoffer.ai.ragent.rag.dao.entity.IntentNodeDO;
 import com.nageoffer.ai.ragent.rag.dao.mapper.IntentNodeMapper;
+import com.nageoffer.ai.ragent.knowledge.dao.entity.KnowledgeBaseDO;
 import com.nageoffer.ai.ragent.knowledge.dao.mapper.KnowledgeBaseMapper;
 import com.nageoffer.ai.ragent.rag.enums.IntentKind;
 import com.nageoffer.ai.ragent.rag.enums.IntentLevel;
@@ -39,6 +40,7 @@ import com.nageoffer.ai.ragent.rag.core.intent.IntentTreeCacheManager;
 import com.nageoffer.ai.ragent.rag.core.intent.IntentTreeFactory;
 import com.nageoffer.ai.ragent.ingestion.service.IntentTreeService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,6 +57,7 @@ import java.util.stream.Collectors;
 
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class IntentTreeServiceImpl extends ServiceImpl<IntentNodeMapper, IntentNodeDO> implements IntentTreeService {
 
@@ -119,13 +122,22 @@ public class IntentTreeServiceImpl extends ServiceImpl<IntentNodeMapper, IntentN
             throw new ClientException("TOPIC级别的RAG检索节点必须指定目标知识库");
         }
 
+        KnowledgeBaseDO knowledgeBase = null;
+        if (StrUtil.isNotBlank(requestParam.getKbId())) {
+            knowledgeBase = knowledgeBaseMapper.selectById(requestParam.getKbId());
+            // 不能让缺少知识库配置变成空指针；调用方需要获得明确的业务错误。
+            if (knowledgeBase == null) {
+                throw new ClientException("知识库不存在: " + requestParam.getKbId());
+            }
+        }
+
         IntentNodeDO node = IntentNodeDO.builder()
                 .intentCode(requestParam.getIntentCode())
                 .kbId(
                         StrUtil.isNotBlank(requestParam.getKbId()) ? requestParam.getKbId() : null
                 )
                 .collectionName(
-                        StrUtil.isNotBlank(requestParam.getKbId()) ? knowledgeBaseMapper.selectById(requestParam.getKbId()).getCollectionName() : null
+                        knowledgeBase == null ? null : knowledgeBase.getCollectionName()
                 )
                 .name(requestParam.getName())
                 .level(requestParam.getLevel())
@@ -313,6 +325,14 @@ public class IntentTreeServiceImpl extends ServiceImpl<IntentNodeMapper, IntentN
         int created = 0;
 
         for (IntentNode node : allNodes) {
+            // 工厂中的 KB 节点依赖示例知识库；本地未导入这些知识库时跳过该分支。
+            // MCP 与 SYSTEM 节点没有知识库依赖，仍会被正常初始化。
+            if (shouldSkipMissingKnowledgeBase(node)) {
+                log.warn("跳过默认 KB 意图节点，关联知识库不存在: intentCode={}, kbId={}",
+                        node.getId(), node.getKbId());
+                continue;
+            }
+
             // 如果已经存在相同 intentCode，就跳过，避免重复初始化
             if (existsByIntentCode(node.getId())) {
                 continue;
@@ -340,6 +360,13 @@ public class IntentTreeServiceImpl extends ServiceImpl<IntentNodeMapper, IntentN
         }
 
         return created;
+    }
+
+    private boolean shouldSkipMissingKnowledgeBase(IntentNode node) {
+        if (node.getKind() != IntentKind.KB || StrUtil.isBlank(node.getKbId())) {
+            return false;
+        }
+        return knowledgeBaseMapper.selectById(node.getKbId()) == null;
     }
 
     /**

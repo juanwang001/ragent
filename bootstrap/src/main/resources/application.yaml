@@ -30,7 +30,6 @@ spring:
     redis:
       host: 127.0.0.1
       port: 6379
-      password: 123456
 
 rocketmq:
   name-server: 127.0.0.1:9876
@@ -42,6 +41,10 @@ milvus:
   uri: http://localhost:19530
 
 rag:
+  intent-tree:
+    # 首次启动空数据库时自动写入默认意图树；已有树只由后台页面维护。
+    initialize-on-empty: true
+
   vector:
     type: pg  # 可选 milvus / pg
 
@@ -49,13 +52,14 @@ rag:
     collection-name: rag_default_store
     dimension: 1536
     metric-type: COSINE
-    sse-timeout-ms: 300000  # SSE 全局超时（毫秒），默认 5 分钟
+    sse-timeout-ms: 600000  # SSE 全局超时（毫秒），调试期间设为 10 分钟
 
   query-rewrite:
     enabled: true
 
   rerank:
-    enabled: true
+    # 不配置外部 rerank 服务时直接关闭，避免无意义的后处理调用。
+    enabled: false
 
   rate-limit:
     global:
@@ -107,23 +111,6 @@ rag:
 
 ai:
   providers:
-    ollama:
-      url: http://localhost:11434
-      endpoints:
-        chat: /v1/chat/completions
-        embedding: /v1/embeddings
-    bailian:
-      url: https://dashscope.aliyuncs.com
-      api-key: ${BAILIAN_API_KEY:}
-      endpoints:
-        chat: /compatible-mode/v1/chat/completions
-        rerank: /api/v1/services/rerank/text-rerank/text-rerank
-    aihubmix:
-      url: https://aihubmix.com
-      api-key: ${AIHUBMIX_API_KEY:}
-      endpoints:
-        chat: /v1/chat/completions
-        embedding: /v1/embeddings
     siliconflow:
       url: https://api.siliconflow.cn
       api-key: ${SILICONFLOW_API_KEY:}
@@ -139,31 +126,15 @@ ai:
     message-chunk-size: 1
 
   chat:
-    default-model: qwen3-max
-    deep-thinking-model: qwen3-max
+    # 使用硅基流动托管的千问；接口与 OpenAI Chat Completions 协议兼容。
+    default-model: qwen3-8b
+    deep-thinking-model: qwen3-8b
     candidates:
-      - id: qwen-plus
-        provider: bailian
-        model: qwen-plus-latest
-        priority: 1
-      - id: qwen3-local
-        provider: ollama
-        model: qwen3:8b-fp16
-        priority: 2
-      - id: qwen3-max
-        provider: bailian
-        model: qwen3-max
-        supports-thinking: true
-        priority: 3
-      - id: glm-4.7
+      - id: qwen3.5-27b
         provider: siliconflow
-        model: Pro/zai-org/GLM-4.7
+        model: Qwen/Qwen3.5-27B
         supports-thinking: true
-        priority: 4
-      - id: gpt-5.4
-        provider: aihubmix
-        model: gpt-5.4
-        priority: 5
+        priority: 1
 
   embedding:
     default-model: qwen-emb-8b
@@ -173,28 +144,15 @@ ai:
         model: Qwen/Qwen3-Embedding-8B
         dimension: ${rag.default.dimension}
         priority: 1
-      - id: qwen-emb-local
-        provider: ollama
-        model: qwen3-embedding:8b-fp16
-        dimension: ${rag.default.dimension}
-        priority: 2
-      - id: text-embedding-3-large
-        provider: aihubmix
-        model: text-embedding-3-large
-        dimension: ${rag.default.dimension}
-        priority: 3
 
   rerank:
-    default-model: qwen3-rerank
+    # SiliconFlow 未配置 rerank 模型；只保留本地 Noop，避免请求其他供应商。
+    default-model: rerank-noop
     candidates:
-      - id: qwen3-rerank
-        provider: bailian
-        model: qwen3-rerank
-        priority: 1
       - id: rerank-noop
         provider: noop
         model: noop
-        priority: 100
+        priority: 1
 
 rustfs:
   url: http://localhost:9000

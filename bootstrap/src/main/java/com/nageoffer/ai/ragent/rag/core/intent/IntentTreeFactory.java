@@ -220,18 +220,18 @@ public class IntentTreeFactory {
 
         // ========== 3. MCP 实时数据意图查询 ==========
 
-        IntentNode sales = IntentNode.builder()
-                .id("sales")
-                .name("销售汇总数据统计")
+        IntentNode realtimeData = IntentNode.builder()
+                .id("realtime-data")
+                .name("实时数据查询")
                 .level(DOMAIN)
-                .kind(IntentKind.MCP) // Domain 可以先标 SYSTEM，仅作语义提示
+                .kind(IntentKind.MCP) // Domain 节点只用于为叶子工具提供高层语义分组。
                 .build();
 
-        IntentNode dingTaskSales = IntentNode.builder()
+        IntentNode salesData = IntentNode.builder()
                 .id("sales-data")
                 .name("销售数据统计")
                 .level(CATEGORY)
-                .parentId(sales.getId())
+                .parentId(realtimeData.getId())
                 .mcpToolId("sales_query")
                 .kind(IntentKind.MCP)
                 .promptTemplate(MCP_SALES_DATA_PROMPT_TEMPLATE)
@@ -243,8 +243,23 @@ public class IntentTreeFactory {
                 ))
                 .build();
 
-        sales.setChildren(List.of(dingTaskSales));
-        roots.add(sales);
+        IntentNode weatherData = IntentNode.builder()
+                .id("weather-data")
+                .name("中国境内天气查询")
+                .level(CATEGORY)
+                .parentId(realtimeData.getId())
+                .mcpToolId("weather_query")
+                .kind(IntentKind.MCP)
+                .description("查询中国境内城市的当前天气或未来七天天气预报")
+                .examples(List.of(
+                        "北京今天天气怎么样？",
+                        "杭州市未来三天天气",
+                        "深圳明天会下雨吗？"
+                ))
+                .build();
+
+        realtimeData.setChildren(List.of(salesData, weatherData));
+        roots.add(realtimeData);
 
         // ========== 4. 系统交互 / 助手说明 ==========
         IntentNode sys = IntentNode.builder()

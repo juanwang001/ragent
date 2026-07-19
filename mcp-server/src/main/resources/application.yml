@@ -4,3 +4,16 @@ server:
 spring:
   application:
     name: ragent-mcp-server
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+
+weather:
+  open-meteo:
+    geocoding-base-url: https://geocoding-api.open-meteo.com
+    forecast-base-url: https://api.open-meteo.com
+    connect-timeout-seconds: 3
+    request-timeout-seconds: 5
+    current-cache-minutes: 30
+    forecast-cache-minutes: 60
