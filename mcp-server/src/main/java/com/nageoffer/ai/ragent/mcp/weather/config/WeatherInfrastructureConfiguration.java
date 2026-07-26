@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.nageoffer.ai.ragent.mcp.weather;
+package com.nageoffer.ai.ragent.mcp.weather.config;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -24,13 +24,13 @@ import org.springframework.context.annotation.Configuration;
 import java.net.http.HttpClient;
 import java.time.Duration;
 
+/** Registers infrastructure dependencies required by weather adapters. */
 @Configuration
-@EnableConfigurationProperties(WeatherProperties.class)
-public class WeatherConfiguration {
+@EnableConfigurationProperties({OpenMeteoProperties.class, WeatherCacheProperties.class})
+public class WeatherInfrastructureConfiguration {
 
     @Bean
-    public HttpClient openMeteoHttpClient(WeatherProperties properties) {
-        // HttpClient 是线程安全的，应作为单例复用以避免每次请求重新建连。
+    public HttpClient openMeteoHttpClient(OpenMeteoProperties properties) {
         return HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(properties.getConnectTimeoutSeconds()))
                 .build();

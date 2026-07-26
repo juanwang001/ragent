@@ -15,21 +15,17 @@
  * limitations under the License.
  */
 
-package com.nageoffer.ai.ragent.mcp.weather;
+package com.nageoffer.ai.ragent.mcp.weather.config;
 
-// 屏蔽 Open-Meteo 原始 JSON 的内部天气模型。
-public record WeatherData(
-        String city,
-        String time,
-        Integer currentTemp,
-        Integer apparentTemp,
-        Integer highTemp,
-        Integer lowTemp,
-        Integer humidity,
-        Integer weatherCode,
-        String weatherText,
-        Double windSpeed,
-        Integer windDirection,
-        Integer precipitationProbability
-) {
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+/** Configuration owned by the Open-Meteo infrastructure adapter. */
+@Data
+@ConfigurationProperties(prefix = "weather.open-meteo")
+public class OpenMeteoProperties {
+
+    private String forecastBaseUrl;
+    private int connectTimeoutSeconds = 3;
+    private int requestTimeoutSeconds = 5;
 }

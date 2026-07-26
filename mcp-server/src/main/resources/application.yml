@@ -11,9 +11,9 @@ spring:
 
 weather:
   open-meteo:
-    geocoding-base-url: https://geocoding-api.open-meteo.com
     forecast-base-url: https://api.open-meteo.com
     connect-timeout-seconds: 3
     request-timeout-seconds: 5
-    current-cache-minutes: 30
-    forecast-cache-minutes: 60
+  cache:
+    current-ttl-minutes: 30
+    forecast-ttl-minutes: 60

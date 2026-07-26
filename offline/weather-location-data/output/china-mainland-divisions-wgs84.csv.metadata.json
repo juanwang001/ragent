@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-07-25T12:19:29.098617+00:00",
+  "scope": "中国大陆 31 个省级行政区的省、市、区县",
+  "sourceName": "xiangyuecn/AreaCity-JsSpider-StatsGov",
+  "sourceVersion": "2025.251231.260403",
+  "sourceReleaseUrl": "https://github.com/xiangyuecn/AreaCity-JsSpider-StatsGov/releases/tag/2025.251231.260403",
+  "sourceCoordinateSystem": "GCJ-02",
+  "targetCoordinateSystem": "WGS84 (EPSG:4326)",
+  "coordinateTransformation": {
+    "method": "iterative inverse of the standard GCJ-02 forward transform",
+    "convergenceThresholdDegrees": 1e-08,
+    "maximumIterations": 32
+  },
+  "selectionRules": [
+    "exclude Taiwan, Hong Kong, Macao and foreign helper records",
+    "collapse synthetic selector nodes that duplicate a real adcode",
+    "retain province-administered counties directly under province"
+  ],
+  "statistics": {
+    "source_admin_records": 3638,
+    "source_geo_records": 3635,
+    "output_records": 3214,
+    "collapsed_synthetic_records": 36,
+    "excluded_non_mainland_records": 388
+  },
+  "output": {
+    "path": "china-mainland-divisions-wgs84.csv",
+    "bytes": 363231,
+    "sha256": "9a5d8763035458f0d2af3d1730edb0d5eb39df6ef164aa3af04e0c9af1f5a5c7"
+  },
+  "inputs": [
+    {
+      "path": "offline\\weather-location-data\\work\\raw\\ok_data_level3.csv",
+      "bytes": 240347,
+      "sha256": "dd5a1594565b65fa3fea5ce4b9935e0b28908226949ae44f07ebfd533428e8ff"
+    },
+    {
+      "path": "offline\\weather-location-data\\work\\raw\\ok_geo.csv",
+      "bytes": 166898134,
+      "sha256": "ac2641b1cb137d099779f49b21b965919591af9d82a29a911f6270530fef8ed7"
+    }
+  ]
+}

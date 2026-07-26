@@ -1,0 +1,520 @@
+{
+  "validatedAt": "2026-07-26T01:43:46.996468+00:00",
+  "csv": {
+    "path": "mcp-server\\src\\main\\resources\\weather\\china-mainland-divisions-wgs84.csv",
+    "bytes": 363231,
+    "sha256": "9a5d8763035458f0d2af3d1730edb0d5eb39df6ef164aa3af04e0c9af1f5a5c7",
+    "coordinateSystem": "WGS84"
+  },
+  "openMeteo": {
+    "endpoint": "https://api.open-meteo.com/v1/forecast",
+    "currentFields": [
+      "temperature_2m",
+      "relative_humidity_2m",
+      "apparent_temperature",
+      "weather_code",
+      "wind_speed_10m",
+      "wind_direction_10m"
+    ],
+    "dailyFields": [
+      "weather_code",
+      "temperature_2m_max",
+      "temperature_2m_min",
+      "precipitation_probability_max",
+      "wind_speed_10m_max"
+    ],
+    "timezone": "Asia/Shanghai",
+    "forecastDays": 1,
+    "timeoutSeconds": 5.0
+  },
+  "criteria": {
+    "httpStatus": "2xx",
+    "maximumGridDistanceKm": 15.0,
+    "requiredCurrentAndDailyFields": true,
+    "timezone": "Asia/Shanghai",
+    "utcOffsetSeconds": 28800
+  },
+  "summary": {
+    "sampleCount": 12,
+    "passCount": 12,
+    "failCount": 0,
+    "maximumObservedGridDistanceKm": 6.196,
+    "averageGridDistanceKm": 3.83,
+    "maximumResponseTimeMs": 1556.5,
+    "allPassed": true
+  },
+  "samples": [
+    {
+      "status": "PASS",
+      "location": {
+        "adcode": "110108",
+        "level": "COUNTY",
+        "full_name": "北京市海淀区",
+        "longitude": 116.291634,
+        "latitude": 39.958643
+      },
+      "openMeteoGrid": {
+        "longitude": 116.27095,
+        "latitude": 39.964848,
+        "distanceKm": 1.893,
+        "elevationMeters": 52.0,
+        "timezone": "Asia/Shanghai"
+      },
+      "gridDistanceKm": 1.893,
+      "generationTimeMs": 0.26166439056396484,
+      "current": {
+        "time": "2026-07-26T09:30",
+        "temperature2m": 27.8,
+        "relativeHumidity2m": 81,
+        "apparentTemperature": 33.8,
+        "weatherCode": 2,
+        "windSpeed10m": 1.3,
+        "windDirection10m": 106
+      },
+      "daily": {
+        "date": "2026-07-26",
+        "weatherCode": 95,
+        "temperature2mMax": 32.1,
+        "temperature2mMin": 24.2,
+        "precipitationProbabilityMax": 67,
+        "windSpeed10mMax": 7.5
+      },
+      "httpStatus": 200,
+      "responseTimeMs": 1406.9,
+      "requestUrl": "https://api.open-meteo.com/v1/forecast?latitude=39.958643&longitude=116.291634&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&timezone=Asia%2FShanghai&forecast_days=1"
+    },
+    {
+      "status": "PASS",
+      "location": {
+        "adcode": "230103",
+        "level": "COUNTY",
+        "full_name": "黑龙江省哈尔滨市南岗区",
+        "longitude": 126.662796,
+        "latitude": 45.75798
+      },
+      "openMeteoGrid": {
+        "longitude": 126.68247,
+        "latitude": 45.79965,
+        "distanceKm": 4.878,
+        "elevationMeters": 134.0,
+        "timezone": "Asia/Shanghai"
+      },
+      "gridDistanceKm": 4.878,
+      "generationTimeMs": 0.2415180206298828,
+      "current": {
+        "time": "2026-07-26T09:30",
+        "temperature2m": 27.5,
+        "relativeHumidity2m": 71,
+        "apparentTemperature": 31.6,
+        "weatherCode": 95,
+        "windSpeed10m": 6.7,
+        "windDirection10m": 262
+      },
+      "daily": {
+        "date": "2026-07-26",
+        "weatherCode": 96,
+        "temperature2mMax": 30.3,
+        "temperature2mMin": 22.5,
+        "precipitationProbabilityMax": 78,
+        "windSpeed10mMax": 10.5
+      },
+      "httpStatus": 200,
+      "responseTimeMs": 1261.7,
+      "requestUrl": "https://api.open-meteo.com/v1/forecast?latitude=45.75798&longitude=126.662796&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&timezone=Asia%2FShanghai&forecast_days=1"
+    },
+    {
+      "status": "PASS",
+      "location": {
+        "adcode": "310115",
+        "level": "COUNTY",
+        "full_name": "上海市浦东新区",
+        "longitude": 121.540051,
+        "latitude": 31.223595
+      },
+      "openMeteoGrid": {
+        "longitude": 121.5,
+        "latitude": 31.247803,
+        "distanceKm": 4.663,
+        "elevationMeters": 8.0,
+        "timezone": "Asia/Shanghai"
+      },
+      "gridDistanceKm": 4.663,
+      "generationTimeMs": 0.2714395523071289,
+      "current": {
+        "time": "2026-07-26T09:30",
+        "temperature2m": 33.5,
+        "relativeHumidity2m": 56,
+        "apparentTemperature": 37.5,
+        "weatherCode": 1,
+        "windSpeed10m": 17.6,
+        "windDirection10m": 172
+      },
+      "daily": {
+        "date": "2026-07-26",
+        "weatherCode": 3,
+        "temperature2mMax": 37.0,
+        "temperature2mMin": 28.8,
+        "precipitationProbabilityMax": 0,
+        "windSpeed10mMax": 18.1
+      },
+      "httpStatus": 200,
+      "responseTimeMs": 1210.0,
+      "requestUrl": "https://api.open-meteo.com/v1/forecast?latitude=31.223595&longitude=121.540051&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&timezone=Asia%2FShanghai&forecast_days=1"
+    },
+    {
+      "status": "PASS",
+      "location": {
+        "adcode": "330106",
+        "level": "COUNTY",
+        "full_name": "浙江省杭州市西湖区",
+        "longitude": 120.125628,
+        "latitude": 30.261528
+      },
+      "openMeteoGrid": {
+        "longitude": 120.14051,
+        "latitude": 30.263618,
+        "distanceKm": 1.448,
+        "elevationMeters": 17.0,
+        "timezone": "Asia/Shanghai"
+      },
+      "gridDistanceKm": 1.448,
+      "generationTimeMs": 0.3056526184082031,
+      "current": {
+        "time": "2026-07-26T09:30",
+        "temperature2m": 33.3,
+        "relativeHumidity2m": 57,
+        "apparentTemperature": 37.9,
+        "weatherCode": 2,
+        "windSpeed10m": 13.7,
+        "windDirection10m": 177
+      },
+      "daily": {
+        "date": "2026-07-26",
+        "weatherCode": 3,
+        "temperature2mMax": 38.4,
+        "temperature2mMin": 28.5,
+        "precipitationProbabilityMax": 14,
+        "windSpeed10mMax": 18.8
+      },
+      "httpStatus": 200,
+      "responseTimeMs": 1229.7,
+      "requestUrl": "https://api.open-meteo.com/v1/forecast?latitude=30.261528&longitude=120.125628&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&timezone=Asia%2FShanghai&forecast_days=1"
+    },
+    {
+      "status": "PASS",
+      "location": {
+        "adcode": "420111",
+        "level": "COUNTY",
+        "full_name": "湖北省武汉市洪山区",
+        "longitude": 114.337177,
+        "latitude": 30.503023
+      },
+      "openMeteoGrid": {
+        "longitude": 114.32432,
+        "latitude": 30.474516,
+        "distanceKm": 3.401,
+        "elevationMeters": 27.0,
+        "timezone": "Asia/Shanghai"
+      },
+      "gridDistanceKm": 3.401,
+      "generationTimeMs": 2.0110607147216797,
+      "current": {
+        "time": "2026-07-26T09:30",
+        "temperature2m": 32.9,
+        "relativeHumidity2m": 70,
+        "apparentTemperature": 39.8,
+        "weatherCode": 1,
+        "windSpeed10m": 10.2,
+        "windDirection10m": 139
+      },
+      "daily": {
+        "date": "2026-07-26",
+        "weatherCode": 96,
+        "temperature2mMax": 34.2,
+        "temperature2mMin": 26.8,
+        "precipitationProbabilityMax": 82,
+        "windSpeed10mMax": 13.6
+      },
+      "httpStatus": 200,
+      "responseTimeMs": 1556.5,
+      "requestUrl": "https://api.open-meteo.com/v1/forecast?latitude=30.503023&longitude=114.337177&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&timezone=Asia%2FShanghai&forecast_days=1"
+    },
+    {
+      "status": "PASS",
+      "location": {
+        "adcode": "440305",
+        "level": "COUNTY",
+        "full_name": "广东省深圳市南山区",
+        "longitude": 113.925617,
+        "latitude": 22.536232
+      },
+      "openMeteoGrid": {
+        "longitude": 113.90041,
+        "latitude": 22.530754,
+        "distanceKm": 2.66,
+        "elevationMeters": 27.0,
+        "timezone": "Asia/Shanghai"
+      },
+      "gridDistanceKm": 2.66,
+      "generationTimeMs": 0.30493736267089844,
+      "current": {
+        "time": "2026-07-26T09:30",
+        "temperature2m": 26.3,
+        "relativeHumidity2m": 88,
+        "apparentTemperature": 24.8,
+        "weatherCode": 95,
+        "windSpeed10m": 52.3,
+        "windDirection10m": 252
+      },
+      "daily": {
+        "date": "2026-07-26",
+        "weatherCode": 96,
+        "temperature2mMax": 27.4,
+        "temperature2mMin": 25.8,
+        "precipitationProbabilityMax": 100,
+        "windSpeed10mMax": 60.2
+      },
+      "httpStatus": 200,
+      "responseTimeMs": 1196.6,
+      "requestUrl": "https://api.open-meteo.com/v1/forecast?latitude=22.536232&longitude=113.925617&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&timezone=Asia%2FShanghai&forecast_days=1"
+    },
+    {
+      "status": "PASS",
+      "location": {
+        "adcode": "460203",
+        "level": "COUNTY",
+        "full_name": "海南省三亚市吉阳区",
+        "longitude": 109.574282,
+        "latitude": 18.283312
+      },
+      "openMeteoGrid": {
+        "longitude": 109.59961,
+        "latitude": 18.312828,
+        "distanceKm": 4.233,
+        "elevationMeters": 15.0,
+        "timezone": "Asia/Shanghai"
+      },
+      "gridDistanceKm": 4.233,
+      "generationTimeMs": 2.7976036071777344,
+      "current": {
+        "time": "2026-07-26T09:30",
+        "temperature2m": 29.8,
+        "relativeHumidity2m": 76,
+        "apparentTemperature": 35.1,
+        "weatherCode": 2,
+        "windSpeed10m": 10.1,
+        "windDirection10m": 246
+      },
+      "daily": {
+        "date": "2026-07-26",
+        "weatherCode": 3,
+        "temperature2mMax": 31.2,
+        "temperature2mMin": 25.5,
+        "precipitationProbabilityMax": 20,
+        "windSpeed10mMax": 14.7
+      },
+      "httpStatus": 200,
+      "responseTimeMs": 1216.3,
+      "requestUrl": "https://api.open-meteo.com/v1/forecast?latitude=18.283312&longitude=109.574282&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&timezone=Asia%2FShanghai&forecast_days=1"
+    },
+    {
+      "status": "PASS",
+      "location": {
+        "adcode": "510107",
+        "level": "COUNTY",
+        "full_name": "四川省成都市武侯区",
+        "longitude": 104.0408,
+        "latitude": 30.644325
+      },
+      "openMeteoGrid": {
+        "longitude": 104.00943,
+        "latitude": 30.685411,
+        "distanceKm": 5.466,
+        "elevationMeters": 503.0,
+        "timezone": "Asia/Shanghai"
+      },
+      "gridDistanceKm": 5.466,
+      "generationTimeMs": 0.30672550201416016,
+      "current": {
+        "time": "2026-07-26T09:30",
+        "temperature2m": 33.2,
+        "relativeHumidity2m": 43,
+        "apparentTemperature": 36.0,
+        "weatherCode": 1,
+        "windSpeed10m": 3.7,
+        "windDirection10m": 51
+      },
+      "daily": {
+        "date": "2026-07-26",
+        "weatherCode": 53,
+        "temperature2mMax": 39.0,
+        "temperature2mMin": 28.7,
+        "precipitationProbabilityMax": 59,
+        "windSpeed10mMax": 14.7
+      },
+      "httpStatus": 200,
+      "responseTimeMs": 1195.2,
+      "requestUrl": "https://api.open-meteo.com/v1/forecast?latitude=30.644325&longitude=104.0408&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&timezone=Asia%2FShanghai&forecast_days=1"
+    },
+    {
+      "status": "PASS",
+      "location": {
+        "adcode": "540102",
+        "level": "COUNTY",
+        "full_name": "西藏自治区拉萨市城关区",
+        "longitude": 91.138835,
+        "latitude": 29.657543
+      },
+      "openMeteoGrid": {
+        "longitude": 91.14716,
+        "latitude": 29.63093,
+        "distanceKm": 3.067,
+        "elevationMeters": 3655.0,
+        "timezone": "Asia/Shanghai"
+      },
+      "gridDistanceKm": 3.067,
+      "generationTimeMs": 3.6014318466186523,
+      "current": {
+        "time": "2026-07-26T09:30",
+        "temperature2m": 17.5,
+        "relativeHumidity2m": 46,
+        "apparentTemperature": 16.1,
+        "weatherCode": 1,
+        "windSpeed10m": 2.3,
+        "windDirection10m": 238
+      },
+      "daily": {
+        "date": "2026-07-26",
+        "weatherCode": 51,
+        "temperature2mMax": 25.2,
+        "temperature2mMin": 12.8,
+        "precipitationProbabilityMax": 67,
+        "windSpeed10mMax": 10.0
+      },
+      "httpStatus": 200,
+      "responseTimeMs": 1205.3,
+      "requestUrl": "https://api.open-meteo.com/v1/forecast?latitude=29.657543&longitude=91.138835&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&timezone=Asia%2FShanghai&forecast_days=1"
+    },
+    {
+      "status": "PASS",
+      "location": {
+        "adcode": "650102",
+        "level": "COUNTY",
+        "full_name": "新疆维吾尔自治区乌鲁木齐市天山区",
+        "longitude": 87.629122,
+        "latitude": 43.793076
+      },
+      "openMeteoGrid": {
+        "longitude": 87.685326,
+        "latitude": 43.83128,
+        "distanceKm": 6.196,
+        "elevationMeters": 904.0,
+        "timezone": "Asia/Shanghai"
+      },
+      "gridDistanceKm": 6.196,
+      "generationTimeMs": 0.2982616424560547,
+      "current": {
+        "time": "2026-07-26T09:30",
+        "temperature2m": 24.3,
+        "relativeHumidity2m": 41,
+        "apparentTemperature": 23.8,
+        "weatherCode": 0,
+        "windSpeed10m": 3.5,
+        "windDirection10m": 99
+      },
+      "daily": {
+        "date": "2026-07-26",
+        "weatherCode": 3,
+        "temperature2mMax": 30.3,
+        "temperature2mMin": 19.1,
+        "precipitationProbabilityMax": 8,
+        "windSpeed10mMax": 17.2
+      },
+      "httpStatus": 200,
+      "responseTimeMs": 1229.0,
+      "requestUrl": "https://api.open-meteo.com/v1/forecast?latitude=43.793076&longitude=87.629122&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&timezone=Asia%2FShanghai&forecast_days=1"
+    },
+    {
+      "status": "PASS",
+      "location": {
+        "adcode": "419001",
+        "level": "COUNTY",
+        "full_name": "河南省济源市",
+        "longitude": 112.596412,
+        "latitude": 35.069924
+      },
+      "openMeteoGrid": {
+        "longitude": 112.58599,
+        "latitude": 35.114235,
+        "distanceKm": 5.018,
+        "elevationMeters": 151.0,
+        "timezone": "Asia/Shanghai"
+      },
+      "gridDistanceKm": 5.018,
+      "generationTimeMs": 0.5352497100830078,
+      "current": {
+        "time": "2026-07-26T09:30",
+        "temperature2m": 24.0,
+        "relativeHumidity2m": 91,
+        "apparentTemperature": 26.0,
+        "weatherCode": 96,
+        "windSpeed10m": 21.3,
+        "windDirection10m": 104
+      },
+      "daily": {
+        "date": "2026-07-26",
+        "weatherCode": 96,
+        "temperature2mMax": 28.5,
+        "temperature2mMin": 23.0,
+        "precipitationProbabilityMax": 73,
+        "windSpeed10mMax": 21.3
+      },
+      "httpStatus": 200,
+      "responseTimeMs": 1177.2,
+      "requestUrl": "https://api.open-meteo.com/v1/forecast?latitude=35.069924&longitude=112.596412&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&timezone=Asia%2FShanghai&forecast_days=1"
+    },
+    {
+      "status": "PASS",
+      "location": {
+        "adcode": "620200",
+        "level": "CITY",
+        "full_name": "甘肃省嘉峪关市",
+        "longitude": 98.287604,
+        "latitude": 39.77242
+      },
+      "openMeteoGrid": {
+        "longitude": 98.261475,
+        "latitude": 39.753952,
+        "distanceKm": 3.034,
+        "elevationMeters": 1661.0,
+        "timezone": "Asia/Shanghai"
+      },
+      "gridDistanceKm": 3.034,
+      "generationTimeMs": 0.2588033676147461,
+      "current": {
+        "time": "2026-07-26T09:30",
+        "temperature2m": 29.1,
+        "relativeHumidity2m": 28,
+        "apparentTemperature": 25.7,
+        "weatherCode": 3,
+        "windSpeed10m": 20.6,
+        "windDirection10m": 276
+      },
+      "daily": {
+        "date": "2026-07-26",
+        "weatherCode": 3,
+        "temperature2mMax": 31.8,
+        "temperature2mMin": 23.0,
+        "precipitationProbabilityMax": 8,
+        "windSpeed10mMax": 20.4
+      },
+      "httpStatus": 200,
+      "responseTimeMs": 1178.0,
+      "requestUrl": "https://api.open-meteo.com/v1/forecast?latitude=39.77242&longitude=98.287604&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&timezone=Asia%2FShanghai&forecast_days=1"
+    }
+  ],
+  "interpretation": {
+    "proves": "CSV WGS84 coordinates are accepted by Open-Meteo, map to a nearby forecast grid cell, and return the complete response shape consumed by OpenMeteoWeatherProvider.",
+    "doesNotProve": "A single live API sample cannot establish meteorological forecast accuracy against ground-station observations."
+  }
+}

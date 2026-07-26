@@ -15,15 +15,25 @@
  * limitations under the License.
  */
 
-package com.nageoffer.ai.ragent.mcp.weather;
+package com.nageoffer.ai.ragent.mcp.weather.infrastructure.openmeteo;
 
-import java.util.Locale;
+/** Converts Open-Meteo WMO weather codes into text for the application. */
+public final class WeatherCodeMapper {
 
-// Open-Meteo 地理编码后的规范地点。
-public record GeoLocation(String name, String countryCode, double latitude, double longitude) {
+    private WeatherCodeMapper() {
+    }
 
-    public String cacheLocationId() {
-        // 以固定精度的经纬度代表地点，避免“北京/北京市”等别名造成天气缓存重复。
-        return String.format(Locale.ROOT, "%.4f:%.4f", latitude, longitude);
+    public static String toText(int code) {
+        return switch (code) {
+            case 0 -> "晴";
+            case 1, 2 -> "少云";
+            case 3 -> "阴";
+            case 45, 48 -> "雾";
+            case 51, 53, 55, 56, 57 -> "毛毛雨";
+            case 61, 63, 65, 66, 67, 80, 81, 82 -> "雨";
+            case 71, 73, 75, 77, 85, 86 -> "雪";
+            case 95, 96, 99 -> "雷暴";
+            default -> "未知天气";
+        };
     }
 }

@@ -1,0 +1,36 @@
+{
+  "sourceName": "xiangyuecn/AreaCity-JsSpider-StatsGov",
+  "sourceVersion": "2025.251231.260403",
+  "releaseUrl": "https://github.com/xiangyuecn/AreaCity-JsSpider-StatsGov/releases/tag/2025.251231.260403",
+  "repositoryLicense": "MIT",
+  "archives": [
+    {
+      "name": "ok_data_level3-4.csv.7z",
+      "url": "https://github.com/xiangyuecn/AreaCity-JsSpider-StatsGov/releases/download/2025.251231.260403/ok_data_level3-4.csv.7z",
+      "bytes": 525006,
+      "sha256": "0b181b4105c32b2631b1c8c8654859f10684c3748b188ebe08f342291dec1169",
+      "usedMember": "ok_data_level3.csv",
+      "usedMemberBytes": 240347,
+      "usedMemberSha256": "dd5a1594565b65fa3fea5ce4b9935e0b28908226949ae44f07ebfd533428e8ff"
+    },
+    {
+      "name": "ok_geo.csv.7z",
+      "url": "https://github.com/xiangyuecn/AreaCity-JsSpider-StatsGov/releases/download/2025.251231.260403/ok_geo.csv.7z",
+      "bytes": 16518032,
+      "sha256": "675c3e9b8dec6444994d3ef53259a145304f6a957db8a5e601e55c0b9e61e21a",
+      "usedMember": "ok_geo.csv",
+      "usedMemberBytes": 166898134,
+      "usedMemberSha256": "ac2641b1cb137d099779f49b21b965919591af9d82a29a911f6270530fef8ed7"
+    }
+  ],
+  "sourceCoordinateSystem": "GCJ-02",
+  "targetCoordinateSystem": "WGS84",
+  "scope": "中国大陆 31 个省级行政区的省、市、区县",
+  "notes": [
+    "行政区数据整合国家地名信息库、高德地图和腾讯地图。",
+    "上游发布说明明确指出尚未包含新疆新设的和康县、和安县，因为当时高德地图尚无对应数据。",
+    "台湾省下级 378 条记录在该发布版中没有中心点，本产物未用上级坐标冒充。",
+    "香港、澳门和数据源中的国外辅助节点不在本次中国大陆口径内。",
+    "仓库许可证不自动替代上游地图数据提供方的使用条款；对外再分发前需单独复核。"
+  ]
+}

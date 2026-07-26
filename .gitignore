@@ -37,6 +37,18 @@ build/
 .vscode/
 scripts/logs/
 
+### Offline geospatial source data ###
+/data-source/
+/.venv-weather-data/
+__pycache__/
+*.py[cod]
+/offline/weather-location-data/source/*
+!/offline/weather-location-data/source/.gitkeep
+/offline/weather-location-data/work/*
+!/offline/weather-location-data/work/.gitkeep
+/.toolchains/
+/local-backups/
+
 ### Frontend ###
 node_modules/
 dist/

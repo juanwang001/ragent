@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-package com.nageoffer.ai.ragent.mcp.executor;
+package com.nageoffer.ai.ragent.mcp.weather.adapter.inbound.mcp;
 
-import com.nageoffer.ai.ragent.mcp.weather.WeatherData;
-import com.nageoffer.ai.ragent.mcp.weather.WeatherService;
+import com.nageoffer.ai.ragent.mcp.weather.application.WeatherQueryService;
+import com.nageoffer.ai.ragent.mcp.weather.domain.model.AdministrativeLocationQuery;
+import com.nageoffer.ai.ragent.mcp.weather.domain.model.WeatherData;
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.spec.McpSchema.CallToolRequest;
 import io.modelcontextprotocol.spec.McpSchema.CallToolResult;
@@ -44,7 +45,7 @@ public class WeatherMcpExecutor {
     private static final int DEFAULT_FORECAST_DAYS = 3;
     private static final int MAX_FORECAST_DAYS = 7;
 
-    private final WeatherService weatherService;
+    private final WeatherQueryService weatherQueryService;
 
     @Bean
     public McpServerFeatures.SyncToolSpecification weatherToolSpecification() {
@@ -53,12 +54,28 @@ public class WeatherMcpExecutor {
                 (exchange, request) -> handleCall(request));
     }
 
-    private Tool buildTool() {
+    Tool buildTool() {
         Map<String, Object> properties = new LinkedHashMap<>();
+
+        properties.put("province", Map.of(
+                "type", "string",
+                "description", "省级行政区完整名称。必须根据用户提到的地点补全，"
+                        + "例如湖北省、北京市、新疆维吾尔自治区",
+                "minLength", 1
+        ));
 
         properties.put("city", Map.of(
                 "type", "string",
-                "description", "中国境内城市名称，例如北京、北京市、上海、杭州",
+                "description", "地级市完整名称。普通区县必须补全所属城市；"
+                        + "直辖市重复填写省级名称，例如北京市；"
+                        + "省直辖县级行政区（如济源市）不填写此参数",
+                "minLength", 1
+        ));
+
+        properties.put("district", Map.of(
+                "type", "string",
+                "description", "区、县、县级市完整名称，例如洪山区、海淀区、济源市。"
+                        + "查询省级或地级市天气时可以省略",
                 "minLength", 1
         ));
 
@@ -78,13 +95,14 @@ public class WeatherMcpExecutor {
         ));
 
         JsonSchema inputSchema = new JsonSchema(
-                "object", properties, List.of("city"), null, null, null
+                "object", properties, List.of("province"), null, null, null
         );
 
         return Tool.builder()
                 .name(TOOL_ID)
-                .description("查询中国境内城市的真实天气。支持当前天气和最多未来 7 天预报，"
-                        + "数据由 Open-Meteo 提供。")
+                .description("按规范的省、市、区县行政层级查询中国大陆真实天气。"
+                        + "支持直辖市、省直辖县级行政区、当前天气和最多未来 7 天预报，"
+                        + "地点由本地行政区数据解析，天气由 Open-Meteo 提供。")
                 .inputSchema(inputSchema)
                 .build();
     }
@@ -93,12 +111,14 @@ public class WeatherMcpExecutor {
         long startMs = System.currentTimeMillis();
         try {
             Map<String, Object> args = request.arguments() == null ? Map.of() : request.arguments();
+            String province = stringArg(args, "province");
             String city = stringArg(args, "city");
+            String district = stringArg(args, "district");
             String queryType = stringArg(args, "queryType");
             Integer days = intArg(args, "days");
 
-            if (city == null || city.isBlank()) {
-                return errorResult("请提供中国境内城市名称");
+            if (province == null || province.isBlank()) {
+                return errorResult("请提供省级行政区名称");
             }
             if (queryType == null || queryType.isBlank()) {
                 queryType = "current";
@@ -113,12 +133,25 @@ public class WeatherMcpExecutor {
                 days = MAX_FORECAST_DAYS;
             }
 
+            AdministrativeLocationQuery locationQuery = new AdministrativeLocationQuery(
+                    province,
+                    city,
+                    district
+            );
             String result = "forecast".equals(queryType)
-                    ? buildForecastResult(city.trim(), days)
-                    : buildCurrentResult(city.trim());
+                    ? buildForecastResult(locationQuery, days)
+                    : buildCurrentResult(locationQuery);
 
-            log.info("MCP 天气工具调用完成，toolId={}, city={}, queryType={}, elapsed={}ms",
-                    TOOL_ID, city, queryType, System.currentTimeMillis() - startMs);
+            log.info(
+                    "MCP 天气工具调用完成，toolId={}, province={}, city={}, district={}, "
+                            + "queryType={}, elapsed={}ms",
+                    TOOL_ID,
+                    province,
+                    city,
+                    district,
+                    queryType,
+                    System.currentTimeMillis() - startMs
+            );
             return successResult(result);
         } catch (IllegalArgumentException e) {
             // 参数或地点校验失败属于用户可理解的业务错误，无需暴露堆栈。
@@ -131,8 +164,8 @@ public class WeatherMcpExecutor {
         }
     }
 
-    private String buildCurrentResult(String city) {
-        WeatherData weather = weatherService.queryCurrent(city);
+    private String buildCurrentResult(AdministrativeLocationQuery locationQuery) {
+        WeatherData weather = weatherQueryService.queryCurrent(locationQuery);
 
         return String.format("""
                 【%s 当前天气】
@@ -159,8 +192,8 @@ public class WeatherMcpExecutor {
         ).trim();
     }
 
-    private String buildForecastResult(String city, int days) {
-        List<WeatherData> forecast = weatherService.queryForecast(city, days);
+    private String buildForecastResult(AdministrativeLocationQuery locationQuery, int days) {
+        List<WeatherData> forecast = weatherQueryService.queryForecast(locationQuery, days);
         String displayCity = forecast.get(0).city();
         StringBuilder result = new StringBuilder("【" + displayCity + "未来" + days + "天天气预报】\n");
 
